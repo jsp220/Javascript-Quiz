@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
+    <title>Javascript Quiz Challenge</title>
+</head>
+<body>
+    <header>
+        <h1 class="title">Javascript Quiz Challenge</h1>
+        <button class="start-button">Start Quiz</button>
+    </header>
+
+    <main>
+        <section>
+            <div class="card question">
+                <h2 class="question-no"></h2>
+                <p class="question-text">
+                    Answer the following 5 questions correctly in the shortest amount of time possible. 
+                    Each incorrect answer will subtract 10 seconds off the clock. Good luck!
+                </p>    
+            </div>
+        </section>
+        <section>
+            <div class="high-score">
+                <div>
+                    <h3>High Scores</h3>
+                    <ol class="high-score-list"></ol>
+                </div>
+                <button class="reset-button">Reset High Scores</button>
+            </div>
+            <div class="card timer">
+                <div class="timer-count">90</div>
+                <h4>seconds remaining</h4>
+            </div>
+        </section>
+    </main>
+    
+</body>
+</html>
