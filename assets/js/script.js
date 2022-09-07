@@ -1,13 +1,15 @@
-var scoreListEl = document.querySelector(".score-list");
-var liEl1 = document.querySelector(".score-1");
-var liEl2 = document.querySelector(".score-2");
-var liEl3 = document.querySelector(".score-3");
-var liEl4 = document.querySelector(".score-4");
-var liEl5 = document.querySelector(".score-5");
 var resetButton = document.querySelector(".reset-button");
 var startButton = document.querySelector(".start-button");
+var timerEl = document.querySelector(".timer-count");
+var scoreListEl = document.querySelector(".score-list");
+for (i=1; i<=5; i++) {
+    eval("var liEl" + i + " = document.querySelector('.score-" + i + "')");
+};
 
 var highScores = [];
+var isWin = false;
+var timerCount;
+var gameOver = true;
 
 function getHighScore() {
     var storedHighScore = localStorage.getItem("highScores");
@@ -35,7 +37,41 @@ function resetScores() {
 }
 
 function startQuiz() {
+    gameOver = false;
+    timerCount = 90;
+    timerEl.textContent = timerCount;
+    startButton.disabled = true;
+    startTimer();
+    questionOne();
     return;
+}
+
+function startTimer() {
+    var timer = setInterval(function() {
+        if(gameOver) {
+            clearInterval(timer);
+            return;
+        }
+
+        timerCount--;
+
+        timerEl.textContent = timerCount;
+
+        if (timerCount >= 0) {
+            if (isWin) {
+                clearInterval(timer);
+                winGame();
+                gameOver = true;
+                return;
+            }
+        }
+        if (timerCount == 0) {
+            clearInterval(timer);
+            loseGame();
+            gameOver = true;
+            return;
+        }
+    }, 1000);
 }
 
 resetButton.addEventListener("click", resetScores);
