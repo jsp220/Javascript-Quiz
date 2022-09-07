@@ -1,7 +1,7 @@
 :root {
-    --dark: #060;
-    --medium: #0b0;
-    --light: #8e8;
+    --dark: rgb(16, 111, 68);
+    --medium: rgb(31, 198, 31);
+    --light: rgb(184, 239, 184);
     --radius: 10px;
 }
 
@@ -16,9 +16,9 @@ body {
 }
 
 header {
-    margin: 0px 20px;
+    margin: 0 1.5%;
     text-align: center;
-    background-color: lightgreen;
+    background-color: var(--light);
     padding: 20px;
     border: 7px solid var(--medium);
     border-radius: var(--radius);
@@ -45,7 +45,7 @@ main {
 
 section {
     flex: 0 auto;
-    margin: 30px 20px 0px 20px;
+    margin: 30px 1.5% 0px;
     padding: 7px;
     background-color: var(--medium);
     border-radius: var(--radius);
@@ -138,4 +138,13 @@ section {
     margin: 20px;
 }
 
+@media screen and (max-width: 768px) {
+    .question {
+        width: 100%;
+        min-height: 400px;
+        display: flex;
+        flex-direction: column;
+    }
+  }
 
+  

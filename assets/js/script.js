@@ -23,7 +23,7 @@ var questionText = ["Which Javascript method allows you to flexibly select any e
                     "Which of the following command allows you to create a variable that cannot be reassigned?", 
                     "Which kind of brackets/parentheses are used to define an object?", 
                     "Which of the following expressions will result in a random integer between 0 and the last index of the array randomArray?",
-                    "Which data type consists of two possible values - 'true' and 'false'?"];
+                    "Which data type consists of only two possible values - 'true' and 'false'?"];
 var answerOptions = ["toUppercase", "querySelector", "getElementById", "getElementsByTagName", 
                        "let", "var", "const", "variable", 
                        "{}", "[]", "()", "<>",
@@ -56,6 +56,7 @@ function resetScores() {
         eval(liString + ".textContent = ''");
         eval(liString + ".style.display = 'none'");
     }
+    highScores = [];
 }
 
 function startQuiz() {
@@ -63,6 +64,7 @@ function startQuiz() {
     timerCount = 90;
     timerEl.textContent = timerCount;
     startButton.disabled = true;
+    rightWrongEl.textContent = "";
     index = 0;
     startTimer();
     quizQuestions();
@@ -71,45 +73,28 @@ function startQuiz() {
 
 function startTimer() {
     var timer = setInterval(function() {
-        if(gameOver) {
+        if (gameOver) {
             clearInterval(timer);
             return;
         }
 
         timerCount--;
 
-        if (timerCount >= 0) {
+        if (timerCount > 0) {
             timerEl.textContent = timerCount;
-            if (isWin) {
-                clearInterval(timer);
-                winGame();
-                gameOver = true;
-                return;
-            }
         }
-        if (timerCount < 0) {
+
+        if (timerCount <= 0) {
             timerEl.textContent = 0;
             clearInterval(timer);
             loseGame();
             gameOver = true;
             return;
         }
+
+
     }, 1000);
 }
-
-// quizQuestions goes here
-
-
-resetButton.addEventListener("click", resetScores);
-startButton.addEventListener("click", startQuiz);
-
-getHighScore();
-
-// .options display has to be changed to flex when game starts
-
-// for testing getHighScore()
-// abc = [30, 25, 20];
-// localStorage.setItem("highScores", JSON.stringify(abc));
 
 function quizQuestions() {
     questionNoEl.textContent = "Question " + eval(index+1);
@@ -142,6 +127,11 @@ function evalAnswer(event) {
 function isCorrect() {
     rightWrongEl.textContent = "Correct!";
     index++;
+    if (index === 5) {
+        winGame();
+        gameOver = true;
+        return;
+    }
     quizQuestions();
     return;
 }
@@ -159,3 +149,33 @@ function isIncorrect() {
         timerEl.textContent = timerCount;
     }
 }
+
+function winGame() {
+    questionNoEl.textContent = "";
+    questionTextEl.textContent = "";
+    optionsEl.style.display = "none";
+    rightWrongEl.textContent = "Congratulations! You have completed the quiz!";
+    highScores.push(timerCount);
+    highScores.sort();
+    highScores.reverse();
+    if (highScores.length > 5) {
+        highScores.length = 5;
+    }
+    localStorage.setItem("highScores", JSON.stringify(highScores)); 
+    getHighScore();
+    startButton.disabled = false;
+    return;
+}
+
+resetButton.addEventListener("click", resetScores);
+startButton.addEventListener("click", startQuiz);
+
+getHighScore();
+
+// .options display has to be changed to flex when game starts
+
+// for testing getHighScore()
+// abc = [30, 25, 20];
+// localStorage.setItem("highScores", JSON.stringify(abc));
+
+
