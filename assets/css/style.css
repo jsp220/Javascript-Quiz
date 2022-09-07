@@ -89,6 +89,15 @@ section {
     padding: 10px;
 }
 
+#initials-form {
+    padding: 10px;
+    display: none;
+}
+
+.submit-button {
+    font-size: .85em;
+}
+
 .right-side {
     display: flex;
     flex-direction: column;

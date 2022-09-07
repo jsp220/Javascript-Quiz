@@ -1,5 +1,6 @@
 var resetButton = document.querySelector(".reset-button");
 var startButton = document.querySelector(".start-button");
+var submitButton = document.querySelector(".submit-button");
 var scoreListEl = document.querySelector(".score-list");
 for (i=1; i<=5; i++) {
     eval("var liEl" + i + " = document.querySelector('.score-" + i + "')");
@@ -13,6 +14,8 @@ var option1El = document.querySelector(".option-1");
 var option2El = document.querySelector(".option-2");
 var option3El = document.querySelector(".option-3");
 var gameStatusEl = document.querySelector(".game-status");
+var formEl = document.querySelector("#initials-form");
+var initialsEl = document.querySelector("#initials");
 
 var highScores = [];
 var isWin = false;
@@ -43,7 +46,8 @@ function getHighScore() {
 
         for (var i=1; i <= highScores.length; i++) {
             var liString = "liEl"+i;
-            eval(liString + ".textContent = " + highScores[i-1]);
+            var scoreName = highScores[i-1];
+            eval(liString + ".textContent = '" + scoreName + "'");
             eval(liString + ".style.display = 'list-item'");
         }
     }
@@ -151,11 +155,20 @@ function isIncorrect() {
 }
 
 function winGame() {
-    questionNoEl.textContent = "";
-    questionTextEl.textContent = "";
+    questionNoEl.textContent = "Congratulations! You have completed the quiz!";
+    questionTextEl.textContent = "Your final score is " + timerCount + ".";
     optionsEl.style.display = "none";
-    gameStatusEl.textContent = "Congratulations! You have completed the quiz!";
-    highScores.push(timerCount);
+    gameStatusEl.textContent = "";
+    formEl.style.display = "inline";
+
+    submitButton.addEventListener("click", handleFormSubmit);
+    return;
+}
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    highScores.push(timerCount + " - " + initialsEl.value);
     highScores.sort();
     highScores.reverse();
     if (highScores.length > 5) {
@@ -164,14 +177,15 @@ function winGame() {
     localStorage.setItem("highScores", JSON.stringify(highScores)); 
     getHighScore();
     startButton.disabled = false;
+    formEl.style.display = "none";
     return;
 }
 
 function loseGame() {
-    questionNoEl.textContent = "";
+    questionNoEl.textContent = "You ran out of time! Try again.";
     questionTextEl.textContent = "";
     optionsEl.style.display = "none";
-    gameStatusEl.textContent = "You ran out of time! Try again.";
+    gameStatusEl.textContent = "";
     startButton.disabled = false;
 }
 
@@ -182,8 +196,5 @@ getHighScore();
 
 // .options display has to be changed to flex when game starts
 
-// for testing getHighScore()
-// abc = [30, 25, 20];
-// localStorage.setItem("highScores", JSON.stringify(abc));
 
 
