@@ -6,6 +6,13 @@ for (i=1; i<=5; i++) {
 };
 var timerEl = document.querySelector(".timer-count");
 var questionNoEl = document.querySelector(".question-no");
+var questionTextEl = document.querySelector(".question-text");
+var optionsEl = document.querySelector(".options");
+var option0El = document.querySelector(".option-0");
+var option1El = document.querySelector(".option-1");
+var option2El = document.querySelector(".option-2");
+var option3El = document.querySelector(".option-3");
+var rightWrongEl = document.querySelector(".right-wrong");
 
 var highScores = [];
 var isWin = false;
@@ -17,12 +24,13 @@ var questionText = ["Which Javascript method allows you to flexibly select any e
                     "Which kind of brackets/parentheses are used to define an object?", 
                     "Which of the following expressions will result in a random integer between 0 and the last index of the array randomArray?",
                     "Which data type consists of two possible values - 'true' and 'false'?"];
-var questionOneOptions = ["toUppercase", "querySelector", "getElementById", "getElementsByTagName"];
-var questionTwoOptions = ["let", "var", "const", "variable"];
-var questionThreeOptions = ["{}", "[]", "()", "<>"];
-var questionFourOptions = ["Math.random * randomArray", "Math.floor * randomArray[i]", 
-                          "Math.floor() * Math.random() * randomArray.length", "Math.floor(Math.random() * randomArray.length)"];
-var questionFiveOptions = ["string", "boolean", "number", "balloon"];
+var answerOptions = ["toUppercase", "querySelector", "getElementById", "getElementsByTagName", 
+                       "let", "var", "const", "variable", 
+                       "{}", "[]", "()", "<>",
+                       "Math.random * randomArray", "Math.floor * randomArray[i]", "Math.floor() * Math.random() * randomArray.length", "Math.floor(Math.random() * randomArray.length)",
+                       "string", "boolean", "number", "balloon"];
+var correctOption = [1, 2, 0, 3, 1];
+var correctAnswer = "";
 
 
 function getHighScore() {
@@ -89,15 +97,7 @@ function startTimer() {
     }, 1000);
 }
 
-function quizQuestions() {
-    questionNoEl.textContent = "Question " + eval(index+1);
-    questionNoEl.style.display = "inline";
-    
-
-}
-
-
-
+// quizQuestions goes here
 
 
 resetButton.addEventListener("click", resetScores);
@@ -111,3 +111,39 @@ getHighScore();
 // for testing getHighScore()
 // abc = [30, 25, 20];
 // localStorage.setItem("highScores", JSON.stringify(abc));
+
+function quizQuestions() {
+    questionNoEl.textContent = "Question " + eval(index+1);
+    questionNoEl.style.display = "inline";
+    questionTextEl.textContent = questionText[index];
+    for (var i = 0; i < 4; i++) {
+        var optionEl = "option"+i+"El";
+        var optionLetter = String.fromCharCode(i+65);
+        var optionText = answerOptions[index * 4 + i];
+        eval(optionEl + ".textContent = '" + optionLetter + ". " + optionText + "'");
+    }
+    optionsEl.style.display = "flex";
+    correctAnswer = answerOptions[index * 4 + correctOption[index]];
+    option0El.addEventListener("click", evalAnswer);
+    option1El.addEventListener("click", evalAnswer);
+    option2El.addEventListener("click", evalAnswer);
+    option3El.addEventListener("click", evalAnswer);
+}
+
+function evalAnswer(event) {
+    var answer = event.target.innerHTML.slice(3);
+    if (answer === correctAnswer) {
+        isCorrect();
+    } else {
+        isIncorrect();
+    }
+}
+
+function isCorrect() {
+    rightWrongEl.textContent = "Correct!";
+}
+
+function isIncorrect() {
+    rightWrongEl.textContent = "Incorrect.";
+    timerCount = timerCount - 10;
+}

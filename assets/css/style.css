@@ -66,7 +66,7 @@ section {
 .question-no {
     padding: 10px 10px 0px 10px;
     font-size: 1.5em;
-    /* display: none; */
+    display: none;
 }
 
 .question-text {
@@ -85,6 +85,12 @@ section {
     margin: 10px;
 }
 
+.right-wrong {
+    position: relative;
+    top: -30px;
+    padding: 10px;
+}
+
 .right-side {
     display: flex;
     flex-direction: column;
@@ -98,10 +104,6 @@ section {
     align-items: center;
     min-height: 40%;
 }
-
-/* .high-score-list {
-
-} */
 
 .high-score-list h3 {
     padding: 0px 10px;
