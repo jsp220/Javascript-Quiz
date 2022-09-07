@@ -58,7 +58,7 @@ section {
 
 .question {
     width: 60vw;
-    height: 400px;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
 }
@@ -87,7 +87,6 @@ section {
 
 .right-wrong {
     position: relative;
-    top: -30px;
     padding: 10px;
 }
 

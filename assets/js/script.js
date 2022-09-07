@@ -78,9 +78,8 @@ function startTimer() {
 
         timerCount--;
 
-        timerEl.textContent = timerCount;
-
         if (timerCount >= 0) {
+            timerEl.textContent = timerCount;
             if (isWin) {
                 clearInterval(timer);
                 winGame();
@@ -88,7 +87,8 @@ function startTimer() {
                 return;
             }
         }
-        if (timerCount == 0) {
+        if (timerCount < 0) {
+            timerEl.textContent = 0;
             clearInterval(timer);
             loseGame();
             gameOver = true;
@@ -102,7 +102,6 @@ function startTimer() {
 
 resetButton.addEventListener("click", resetScores);
 startButton.addEventListener("click", startQuiz);
-
 
 getHighScore();
 
@@ -137,13 +136,26 @@ function evalAnswer(event) {
     } else {
         isIncorrect();
     }
+    return;
 }
 
 function isCorrect() {
     rightWrongEl.textContent = "Correct!";
+    index++;
+    quizQuestions();
+    return;
 }
 
 function isIncorrect() {
     rightWrongEl.textContent = "Incorrect.";
     timerCount = timerCount - 10;
+    
+    if (timerCount <= 0) {
+        timerEl.textContent = 0;
+        loseGame();
+        gameOver = true;
+        return;
+    } else {
+        timerEl.textContent = timerCount;
+    }
 }
