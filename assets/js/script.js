@@ -4,7 +4,8 @@ var liEl2 = document.querySelector(".score-2");
 var liEl3 = document.querySelector(".score-3");
 var liEl4 = document.querySelector(".score-4");
 var liEl5 = document.querySelector(".score-5");
-var resetButton
+var resetButton = document.querySelector(".reset-button");
+var startButton = document.querySelector(".start-button");
 
 var highScores = [];
 
@@ -18,12 +19,28 @@ function getHighScore() {
 
         for (var i=1; i <= highScores.length; i++) {
             var liString = "liEl"+i;
-            console.log(liString);
             eval(liString + ".textContent = " + highScores[i-1]);
             eval(liString + ".style.display = 'list-item'");
         }
     }
 }
+
+function resetScores() {
+    localStorage.setItem("highScores", "[]");
+    for (var i=1; i <= highScores.length; i++) {
+        var liString = "liEl"+i;
+        eval(liString + ".textContent = ''");
+        eval(liString + ".style.display = 'none'");
+    }
+}
+
+function startQuiz() {
+    return;
+}
+
+resetButton.addEventListener("click", resetScores);
+startButton.addEventListener("click", startQuiz);
+
 
 getHighScore();
 
