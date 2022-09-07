@@ -12,7 +12,7 @@ var option0El = document.querySelector(".option-0");
 var option1El = document.querySelector(".option-1");
 var option2El = document.querySelector(".option-2");
 var option3El = document.querySelector(".option-3");
-var rightWrongEl = document.querySelector(".right-wrong");
+var gameStatusEl = document.querySelector(".game-status");
 
 var highScores = [];
 var isWin = false;
@@ -64,7 +64,7 @@ function startQuiz() {
     timerCount = 90;
     timerEl.textContent = timerCount;
     startButton.disabled = true;
-    rightWrongEl.textContent = "";
+    gameStatusEl.textContent = "";
     index = 0;
     startTimer();
     quizQuestions();
@@ -125,7 +125,7 @@ function evalAnswer(event) {
 }
 
 function isCorrect() {
-    rightWrongEl.textContent = "Correct!";
+    gameStatusEl.textContent = "Correct!";
     index++;
     if (index === 5) {
         winGame();
@@ -137,7 +137,7 @@ function isCorrect() {
 }
 
 function isIncorrect() {
-    rightWrongEl.textContent = "Incorrect.";
+    gameStatusEl.textContent = "Incorrect.";
     timerCount = timerCount - 10;
     
     if (timerCount <= 0) {
@@ -154,7 +154,7 @@ function winGame() {
     questionNoEl.textContent = "";
     questionTextEl.textContent = "";
     optionsEl.style.display = "none";
-    rightWrongEl.textContent = "Congratulations! You have completed the quiz!";
+    gameStatusEl.textContent = "Congratulations! You have completed the quiz!";
     highScores.push(timerCount);
     highScores.sort();
     highScores.reverse();
@@ -165,6 +165,14 @@ function winGame() {
     getHighScore();
     startButton.disabled = false;
     return;
+}
+
+function loseGame() {
+    questionNoEl.textContent = "";
+    questionTextEl.textContent = "";
+    optionsEl.style.display = "none";
+    gameStatusEl.textContent = "You ran out of time! Try again.";
+    startButton.disabled = false;
 }
 
 resetButton.addEventListener("click", resetScores);
