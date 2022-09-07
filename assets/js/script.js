@@ -1,15 +1,29 @@
 var resetButton = document.querySelector(".reset-button");
 var startButton = document.querySelector(".start-button");
-var timerEl = document.querySelector(".timer-count");
 var scoreListEl = document.querySelector(".score-list");
 for (i=1; i<=5; i++) {
     eval("var liEl" + i + " = document.querySelector('.score-" + i + "')");
 };
+var timerEl = document.querySelector(".timer-count");
+var questionNoEl = document.querySelector(".question-no");
 
 var highScores = [];
 var isWin = false;
 var timerCount;
 var gameOver = true;
+var index;
+var questionText = ["Which Javascript method allows you to flexibly select any element in the html file by tag name, class, or ID?",
+                    "Which of the following command allows you to create a variable that cannot be reassigned?", 
+                    "Which kind of brackets/parentheses are used to define an object?", 
+                    "Which of the following expressions will result in a random integer between 0 and the last index of the array randomArray?",
+                    "Which data type consists of two possible values - 'true' and 'false'?"];
+var questionOneOptions = ["toUppercase", "querySelector", "getElementById", "getElementsByTagName"];
+var questionTwoOptions = ["let", "var", "const", "variable"];
+var questionThreeOptions = ["{}", "[]", "()", "<>"];
+var questionFourOptions = ["Math.random * randomArray", "Math.floor * randomArray[i]", 
+                          "Math.floor() * Math.random() * randomArray.length", "Math.floor(Math.random() * randomArray.length)"];
+var questionFiveOptions = ["string", "boolean", "number", "balloon"];
+
 
 function getHighScore() {
     var storedHighScore = localStorage.getItem("highScores");
@@ -41,8 +55,9 @@ function startQuiz() {
     timerCount = 90;
     timerEl.textContent = timerCount;
     startButton.disabled = true;
+    index = 0;
     startTimer();
-    questionOne();
+    quizQuestions();
     return;
 }
 
@@ -73,6 +88,17 @@ function startTimer() {
         }
     }, 1000);
 }
+
+function quizQuestions() {
+    questionNoEl.textContent = "Question " + eval(index+1);
+    questionNoEl.style.display = "inline";
+    
+
+}
+
+
+
+
 
 resetButton.addEventListener("click", resetScores);
 startButton.addEventListener("click", startQuiz);
