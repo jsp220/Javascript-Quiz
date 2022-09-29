@@ -194,7 +194,5 @@ startButton.addEventListener("click", startQuiz);
 
 getHighScore();
 
-// .options display has to be changed to flex when game starts
 
-
-
+// add comments in the future if time allows
